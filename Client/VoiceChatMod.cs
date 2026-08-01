@@ -53,6 +53,8 @@ public partial class VoiceChatMod : BaseUnityPlugin {
 
     void Update()
     {
+        if (!VoiceChatClientAddon.Enabled || !VoiceChatClientAddon.Connected) return;
+
         if (ModSettings.InputMode == ModSettings.InputMethod.PushToToggle)
         {
             if (Input.GetKeyDown(ModSettings.PushToTalkKey))

@@ -54,6 +54,12 @@ public class ClientVoiceChatCommand : IClientCommand {
 
     /// <inheritdoc />
     public void Execute(string[] args) {
+        if (!VoiceChatClientAddon.Enabled)
+        {
+            _chatBox.AddMessage($"Voice chat is currently disabled.");
+            return;
+        }
+
         void SendUsage() {
             _chatBox.AddMessage($"Invalid usage: {Trigger} <mute|devices>");
         }

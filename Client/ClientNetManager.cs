@@ -40,6 +40,8 @@ public class ClientNetManager {
     /// Send voice data from the local player to the server.
     /// </summary>
     public void SendVoiceData(byte[] data) {
+        if (!VoiceChatClientAddon.Enabled) return;
+
         if (data.Length > ServerVoicePacket.MaxSize) {
             ClientVoiceChat.Logger.Error("Voice data exceeds max size!");
             return;

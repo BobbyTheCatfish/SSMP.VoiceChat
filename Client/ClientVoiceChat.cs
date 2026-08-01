@@ -119,6 +119,7 @@ public class ClientVoiceChat {
     /// a listener for when voice data is received.
     /// </summary>
     private void OnConnect() {
+        if (!VoiceChatClientAddon.Enabled) return;
         Logger.Debug("Client is connected, starting mic capture");
 
         VoiceStatusIcon = new VoiceStatusIcon();
@@ -133,6 +134,7 @@ public class ClientVoiceChat {
     /// is received and stop the microphone manager.
     /// </summary>
     private void OnDisconnect() {
+        if (!VoiceChatClientAddon.Enabled) return;
         Logger.Debug("Client is disconnected, stopping mic capture");
 
         VoiceStatusIcon?.DestroyIcon();
@@ -168,6 +170,8 @@ public class ClientVoiceChat {
     /// </summary>
     /// <param name="player">The player that entered the scene.</param>
     private void OnPlayerEnterScene(IClientPlayer player) {
+        if (!VoiceChatClientAddon.Enabled) return;
+
         Logger.Debug("Player entered scene, adding speaker");
         _soundManager.TryGetOrCreateSpeaker(player.Id, out _);
     }
@@ -177,6 +181,8 @@ public class ClientVoiceChat {
     /// </summary>
     /// <param name="player"></param>
     private void OnPlayerLeaveScene(IClientPlayer player) {
+        if (!VoiceChatClientAddon.Enabled) return;
+
         Logger.Debug("Player left scene, closing and removing speaker");
         _soundManager.TryRemoveSpeaker(player.Id);
     }
@@ -188,6 +194,7 @@ public class ClientVoiceChat {
     /// <param name="data">The voice data as a byte array.</param>
     /// <param name="proximity">Whether this voice data should be played back with proximity-based volume.</param>
     private void OnVoiceReceived(ushort id, byte[] data, bool proximity) {
+        if (!VoiceChatClientAddon.Enabled) return;
         EnableRemoteStatusIcon(id);
 
         if (!_soundManager.TryGetOrCreateSpeaker(id, out var speaker)) {
